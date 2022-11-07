@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="AuthenAuthoModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Dept">
+    <Key>
+      <PropertyRef Name="Did" />
+    </Key>
+    <Property Name="Did" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Dname" Type="varchar" MaxLength="50" />
+    <Property Name="HOD" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Emp">
+    <Key>
+      <PropertyRef Name="Eid" />
+    </Key>
+    <Property Name="Eid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Ename" Type="varchar" MaxLength="50" />
+    <Property Name="Salary" Type="int" />
+    <Property Name="Dob" Type="datetime" />
+    <Property Name="Gender" Type="varchar" MaxLength="50" />
+    <Property Name="Depid" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserName" Type="varchar" MaxLength="50" />
+    <Property Name="Password" Type="varchar" MaxLength="50" />
+    <Property Name="Role" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <Association Name="FK_Emp_Dept">
+    <End Role="Dept" Type="Self.Dept" Multiplicity="1" />
+    <End Role="Emp" Type="Self.Emp" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Dept">
+        <PropertyRef Name="Did" />
+      </Principal>
+      <Dependent Role="Emp">
+        <PropertyRef Name="Depid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="AuthenAuthoModelStoreContainer">
+    <EntitySet Name="Dept" EntityType="Self.Dept" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Emp" EntityType="Self.Emp" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Emp_Dept" Association="Self.FK_Emp_Dept">
+      <End Role="Dept" EntitySet="Dept" />
+      <End Role="Emp" EntitySet="Emp" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
